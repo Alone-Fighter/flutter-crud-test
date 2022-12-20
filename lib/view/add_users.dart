@@ -63,6 +63,7 @@ class _AddUsersState extends State<AddUsers>
       homeScreenController.regionController.text =
       "(+${selectedRegion.prefix})";
       setState(() => homeScreenController.region = selectedRegion);
+      homeScreenController.phoneValidate();
     }
   }
 

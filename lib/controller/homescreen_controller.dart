@@ -63,6 +63,7 @@ class HomeScreenController extends GetxController {
     phoneNumber.text = '';
     email.text = '';
     bank.text = '';
+    region = Region('IR', 98, 'Iran');
    }
 
    // validating phone number
@@ -98,7 +99,7 @@ class HomeScreenController extends GetxController {
         'PhoneNumber' : phoneNumber.text,
         'Email' : email.text,
         'BankAccountNumber' : bank.text,
-        'Region' : '${region!.name} ${region!.code} ${region!.prefix}',
+        'Region' : '${region!.name}  ${region!.code}  ${region!.prefix}',
 
       };
       var response = await DioService().postData(map);
@@ -137,10 +138,12 @@ class HomeScreenController extends GetxController {
     phoneNumber.text = userList[id].phoneNumber!;
     email.text = userList[id].email!;
     bank.text = userList[id].bankAccountNumber!;
-    List regionInfo = userList[id].region!.split(' ');
+    List regionInfo = userList[id].region!.split('  ');
     region = Region(regionInfo[1], int.parse(regionInfo[2]), regionInfo[0]);
+    regionController.text = '(+${region!.prefix})';
     idEdit = userList[id].id!;
     phoneValidate();
+    log(region!.name);
     Get.to(()=>const AddUsers(isEdit: true,));
   }
 
@@ -155,7 +158,7 @@ class HomeScreenController extends GetxController {
         'PhoneNumber' : phoneNumber.text,
         'Email' : email.text,
         'BankAccountNumber' : bank.text,
-        'Region' : '${region!.name} ${region!.code} ${region!.prefix}',
+        'Region' : '${region!.name}  ${region!.code}  ${region!.prefix}',
       };
       log(map.toString());
       var response = await DioService().editData(map);

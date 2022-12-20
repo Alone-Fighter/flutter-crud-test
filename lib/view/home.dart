@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
           floatingActionButton: FloatingActionButton(
               onPressed: () {
+                homeScreenController.clearText();
                 Get.to(() =>const AddUsers(isEdit: false,));
               },
               child: const Icon(Icons.add)),
@@ -71,6 +72,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               InkWell(
                                   onTap: () {
+                                    homeScreenController.clearText();
                                     homeScreenController.fillText(index);
                                   }, child: const Icon(Icons.edit)),
                               const SizedBox(
@@ -87,6 +89,7 @@ class _HomePageState extends State<HomePage> {
                                             homeScreenController.delete(
                                                 homeScreenController.userList[index].id
                                                     .toString());
+                                            Get.back();
                                           },
                                           child: const Icon(Icons.assignment_turned_in_outlined,color: Colors.green,size: 35,),
                                         ),
