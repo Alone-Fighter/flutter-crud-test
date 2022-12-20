@@ -1,13 +1,9 @@
 import 'dart:developer';
 
-import 'package:crud_test/model/region.dart';
-import 'package:crud_test/model/users_model.dart';
-import 'package:crud_test/services/dio_services.dart';
-import 'package:crud_test/services/store.dart';
-import 'package:crud_test/view/add_users.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:phone_number/phone_number.dart';
+
+import '../model/users_model.dart';
 
 class HomeScreenController extends GetxController {
 
