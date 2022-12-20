@@ -1,15 +1,15 @@
 import 'dart:developer';
+import 'package:mc_crud_test/component/region_picker.dart';
+import 'package:mc_crud_test/controller/homescreen_controller.dart';
+import 'package:mc_crud_test/main.dart';
+import 'package:mc_crud_test/services/input_formatters.dart';
+import 'package:mc_crud_test/services/payment_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
-import 'package:mc_crud_test/component/region_picker.dart';
-import 'package:mc_crud_test/controller/homescreen_controller.dart';
-import 'package:mc_crud_test/main.dart';
-import 'package:mc_crud_test/model/region.dart';
-import 'package:mc_crud_test/services/input_formatters.dart';
-import 'package:mc_crud_test/services/payment_card.dart';
 import '../component/custom_textfield.dart';
+import '../model/region.dart';
 
 class AddUsers extends StatefulWidget {
   final bool isEdit;
@@ -61,7 +61,7 @@ class _AddUsersState extends State<AddUsers>
     if (selectedRegion != null) {
       log('Region selected: $selectedRegion');
       homeScreenController.regionController.text =
-          "(+${selectedRegion.prefix})";
+      "(+${selectedRegion.prefix})";
       setState(() => homeScreenController.region = selectedRegion);
     }
   }
@@ -92,9 +92,22 @@ class _AddUsersState extends State<AddUsers>
                     validator: homeScreenController.lnameValidator,
                   ),
                   CustomTextField(
+                    enable: true,
                     text: 'Date Of Birth',
                     controller: homeScreenController.dateOfBirth,
                     validator: homeScreenController.dateodbirthValidator,
+                    suffixIcon: InkWell(
+                      onTap: ()async{
+                        DateTime? pickedate = await showDatePicker(context: context, initialDate: DateTime.now(),firstDate: DateTime(DateTime.now().year - 100),lastDate: DateTime(DateTime.now().year + 50));
+                        if(pickedate != null){
+                          homeScreenController.dateOfBirth.text = pickedate.toString().substring(0,10);
+                        }
+                        else{
+
+                        }
+                      },
+                      child: const Icon(Icons.calendar_month,size: 40,),
+                    ),
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -176,42 +189,42 @@ class _AddUsersState extends State<AddUsers>
                     validator: homeScreenController.emailValidator,
                   ),
                   Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.shade300,
-                              blurRadius: 5,
-                              spreadRadius: 0.1,
-                              offset: const Offset(0, 1),
-                            )
-                          ]
-                      ),
-                      width: Get.width * 0.8,
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      margin: const EdgeInsets.only(bottom: 10, right: 3, left: 3),
-                      child: FormBuilderTextField(
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(19),
-                          CardNumberInputFormatter()
-                        ],
-                        controller: homeScreenController.bank,
-                        onSaved: (String? value) {
-                          _paymentCard.number = CardUtils.getCleanedNumber(value!);
-                        },
-                        textAlign: TextAlign.left,
-                        textAlignVertical: TextAlignVertical.center,
-                        keyboardType: TextInputType.number,
-                        validator: CardUtils.validateCardNum,
-                        decoration: InputDecoration(
-                          suffixIcon: CardUtils.getCardIcon(_paymentCard.type),
-                          hintText: 'BankAccountNumber',
-                          hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
-                          border: InputBorder.none,
-                        ), name: '',
-                      ),),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.shade300,
+                            blurRadius: 5,
+                            spreadRadius: 0.1,
+                            offset: const Offset(0, 1),
+                          )
+                        ]
+                    ),
+                    width: Get.width * 0.8,
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    margin: const EdgeInsets.only(bottom: 10, right: 3, left: 3),
+                    child: FormBuilderTextField(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(19),
+                        CardNumberInputFormatter()
+                      ],
+                      controller: homeScreenController.bank,
+                      onSaved: (String? value) {
+                        _paymentCard.number = CardUtils.getCleanedNumber(value!);
+                      },
+                      textAlign: TextAlign.left,
+                      textAlignVertical: TextAlignVertical.center,
+                      keyboardType: TextInputType.number,
+                      validator: CardUtils.validateCardNum,
+                      decoration: InputDecoration(
+                        suffixIcon: CardUtils.getCardIcon(_paymentCard.type),
+                        hintText: 'BankAccountNumber',
+                        hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
+                        border: InputBorder.none,
+                      ), name: '',
+                    ),),
                   InkWell(
                     onTap: () {
                       widget.isEdit ? homeScreenController.editData() : homeScreenController.submit();

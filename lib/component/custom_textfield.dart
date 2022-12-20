@@ -16,6 +16,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final FormFieldValidator<String>? validator;
   final List<TextInputFormatter>? inputFormatters;
+  final bool? enable;
 
   CustomTextField({
     super.key,
@@ -27,6 +28,7 @@ class CustomTextField extends StatelessWidget {
     this.controller,
     this.validator,
     this.inputFormatters,
+    this.enable,
   });
 
 
@@ -51,6 +53,7 @@ class CustomTextField extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12),
         margin: const EdgeInsets.only(bottom: 10, right: 3, left: 3),
         child: FormBuilderTextField(
+          readOnly: enable ?? false,
           inputFormatters: inputFormatters,
           controller: controller,
           textAlign: TextAlign.left,
