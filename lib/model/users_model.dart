@@ -20,7 +20,7 @@ class UsersModel {
   });
 
   UsersModel.fromJson(Map<String,dynamic> element){
-    id = element["id"];
+    id = element["id"].toString();
     firstName = element["FName"];
     lastName = element["Lname"];
     dateOfBirth = element["DateOfBirth"];

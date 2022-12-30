@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mc_crud_test/controller/homescreen_controller.dart';
+import 'package:mc_crud_test/model/users_model.dart';
+import 'package:mc_crud_test/services/sqflite_services.dart';
 import 'package:mc_crud_test/view/add_users.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,6 +19,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +76,7 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               InkWell(
                                   onTap: () {
+                                    homeScreenController.index = int.parse(homeScreenController.userList[index].id.toString());
                                     homeScreenController.clearText();
                                     homeScreenController.fillText(index);
                                   }, child: const Icon(Icons.edit)),
